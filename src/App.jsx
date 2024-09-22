@@ -1,13 +1,16 @@
-import { Route, Routes } from "react-router-dom";
+// import { Route, Routes } from "react-router-dom";
 import Contacts from "./components/Contacts";
+import ContactProvider from "./context/ContactContext";
 
 function App() {
   return (
     <>
-      <Routes>
+    <ContactProvider>
+      <Contacts />
+      {/* <Routes>
         <Route path="/" element={<Contacts />} />
-        {/* <Route path="/bio" element={<Bio />} /> */}
-      </Routes>
+      </Routes> */}
+      </ContactProvider>
     </>
   );
 }
