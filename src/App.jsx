@@ -1,15 +1,14 @@
-// import { Route, Routes } from "react-router-dom";
-import Contacts from "./components/Contacts";
+import { Route, Routes } from "react-router-dom";
 import ContactProvider from "./context/ContactContext";
+import HomePage from "./components/templates/HomePage";
 
 function App() {
   return (
     <>
     <ContactProvider>
-      <Contacts />
-      {/* <Routes>
-        <Route path="/" element={<Contacts />} />
-      </Routes> */}
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
       </ContactProvider>
     </>
   );
