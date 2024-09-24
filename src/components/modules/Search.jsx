@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { ContactContext } from "../../context/ContactContext";
 
+
 const Search = () => {
   const { contacts, setContacts } = useContext(ContactContext);
   console.log(contacts);

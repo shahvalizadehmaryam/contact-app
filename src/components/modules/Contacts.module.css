@@ -1,0 +1,45 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 30px;
+  }
+  
+  th, td {
+    text-align: center;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even){background-color: #f2f2f2}
+  
+  th {
+    background-color: #04AA6D;
+    color: white;
+  }
+  button{
+    border: none;
+    background-color: transparent;
+  }
+  button:hover{
+    cursor: pointer;
+  }
+  .btn{
+    width: 3rem;
+    height: 2rem;
+    border-radius: 5px;
+    color: #fff;
+  }
+  .btn:hover{
+    cursor: pointer;
+  }
+  .deleteBtn{
+    background-color: rgb(221, 50, 50);
+  }
+  .editBtn{
+    text-decoration: none;
+    background-color: rgb(62, 62, 235);
+  }
+  .actions{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
