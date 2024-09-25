@@ -7,7 +7,6 @@ const initialState = {
 };
 const reducer = (state, action) => {
   switch (action.type) {
-
     case "FETCH_START": {
       return {
         ...state,
@@ -19,7 +18,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         data: contacts,
-        isLoading: false
+        isLoading: false,
       };
     }
     case "FILTER_CONTACTS": {
@@ -36,7 +35,6 @@ const reducer = (state, action) => {
       );
       return {
         ...state,
-
         data: updatedContacts,
       };
     }
@@ -48,18 +46,6 @@ const reducer = (state, action) => {
       return {
         ...state,
         data: updatedContacts,
-      };
-    }
-    case "EDIT_CONTACT": {
-      const contactId = action.payload.contactId;
-      const contact = action.payload.contact;
-      const updatedData = state.data.map((c) =>
-        c.id === contactId ? { ...contact } : c
-      );
-      console.log("updateddata in reducer", updatedData);
-      return {
-        ...state,
-        data: updatedData,
       };
     }
     case "ADD_CONTACT": {

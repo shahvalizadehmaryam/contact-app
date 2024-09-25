@@ -22,6 +22,7 @@ const HomePage = () => {
     };
     fetchContacts();
   }, []);
+  console.log("contacts in home" , contacts)
 
   return (
     <div>

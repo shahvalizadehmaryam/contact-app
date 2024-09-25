@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { ContactContext } from "../../context/ContactProvider";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./NewContact.module.css";
+import { editContact } from "../../services/ContactsApi";
+import axios from "axios";
 
 const NewContact = () => {
   const { contacts, setContacts } = useContext(ContactContext);
@@ -39,12 +41,16 @@ const NewContact = () => {
     }));
   };
 
+  const handleEdit = async () => {
+   await axios.put(editContact(contactId), contact);
+  };
+
   // Handle form submission for both adding and editing
   const formSubmitHandler = (e) => {
     e.preventDefault();
-    console.log("i am a contact", contact);
+
     if (contactId) {
-      setContacts({ type: "EDIT_CONTACT", payload: { contactId, contact } });
+     handleEdit();
     } else {
       // If adding a new contact, append it to the contacts list
       setContacts({ type: "ADD_CONTACT", payload: contact });
@@ -97,7 +103,9 @@ const NewContact = () => {
             required
           />
         </div>
-        <button className={styles.btnEdit} type="submit">{contactId ? "ویرایش" : "افزودن"}</button>
+        <button className={styles.btnEdit} type="submit">
+          {contactId ? "ویرایش" : "افزودن"}
+        </button>
       </form>
     </div>
   );
