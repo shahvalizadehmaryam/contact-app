@@ -20,7 +20,7 @@ const NewContact = () => {
   // Populate the form if we are editing an existing contact
   useEffect(() => {
     if (contactId) {
-      const contactToEdit = contacts.updatedData.find((contact) => contact.id === contactId);
+      const contactToEdit = contacts.data.find((contact) => contact.id === contactId);
       if (contactToEdit) {
         setContact(contactToEdit);
       }

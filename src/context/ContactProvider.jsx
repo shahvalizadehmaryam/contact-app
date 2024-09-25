@@ -2,64 +2,31 @@ import { createContext, useReducer } from "react";
 export const ContactContext = createContext();
 const initialState = {
   isLoading: false,
-  data: [
-    {
-      id: 1,
-      name: "سینا",
-      email: "sina.gh@email.com",
-      job: "software engineer",
-      phone: "09147859621",
-    },
-    {
-      id: 2,
-      name: "مریم",
-      email: "maryam.gh@email.com",
-      job: "ux designer",
-      phone: "09147859627",
-    },
-    {
-      id: 3,
-      name: "علی",
-      email: "ali.gh@email.com",
-      job: "graphic designer",
-      phone: "09147858781",
-    },
-  ],
-  updatedData: [
-    // Initially copy all contacts into updatedData
-    {
-      id: 1,
-      name: "سینا",
-      email: "sina.gh@email.com",
-      job: "software engineer",
-      phone: "09147859621",
-    },
-    {
-      id: 2,
-      name: "مریم",
-      email: "maryam.gh@email.com",
-      job: "ux designer",
-      phone: "09147859627",
-    },
-    {
-      id: 3,
-      name: "علی",
-      email: "ali.gh@email.com",
-      job: "graphic designer",
-      phone: "09147858781",
-    },
-  ],
-  editedItem: {},
+  data: [],
   isError: false,
 };
 const reducer = (state, action) => {
   switch (action.type) {
+
+    case "FETCH_START": {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    }
+    case "FETCH_INITIAL_DATA": {
+      const contacts = action.payload;
+      return {
+        ...state,
+        data: contacts,
+      };
+    }
     case "FILTER_CONTACTS": {
       const text = action.payload;
       if (!text)
         return {
           ...state,
-          updatedData: state.data,
+          data: state.data,
         };
       const updatedContacts = state.data.filter(
         (item) =>
@@ -69,38 +36,37 @@ const reducer = (state, action) => {
       return {
         ...state,
 
-        updatedData: updatedContacts,
+        data: updatedContacts,
       };
     }
     case "DELETE_ITEM": {
       const contactId = action.payload;
-      const updatedContacts = state.updatedData.filter(
+      const updatedContacts = state.data.filter(
         (item) => item.id !== contactId
       );
       return {
         ...state,
-        updatedData: updatedContacts,
+        data: updatedContacts,
       };
     }
     case "EDIT_CONTACT": {
-     const contactId = action.payload.contactId; 
-     const contact = action.payload.contact; 
-      const updatedData = state.updatedData.map((c) => (
-        c.id === contactId ? {...contact} : c
-     ))
-     console.log("updateddata in reducer",updatedData)
+      const contactId = action.payload.contactId;
+      const contact = action.payload.contact;
+      const updatedData = state.data.map((c) =>
+        c.id === contactId ? { ...contact } : c
+      );
+      console.log("updateddata in reducer", updatedData);
       return {
         ...state,
         data: updatedData,
-        updatedData,
       };
     }
     case "ADD_CONTACT": {
       const contact = action.payload;
       return {
         ...state,
-        data: [...state.updatedData, contact],
-        updatedData: [...state.updatedData, contact],
+        data: [...state.data, contact],
+        // updatedData: [...state.updatedData, contact],
       };
     }
     default:

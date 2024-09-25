@@ -25,7 +25,7 @@ const Contacts = () => {
           </tr>
         </thead>
         <tbody>
-          {contacts.updatedData?.map((contact) => (
+          {contacts.data?.map((contact) => (
             <tr key={contact.id}>
               <td>{contact.id}</td>
               <td>{contact.name}</td>
