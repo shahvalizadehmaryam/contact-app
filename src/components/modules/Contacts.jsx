@@ -2,15 +2,21 @@ import { useContext, useState } from "react";
 import { ContactContext } from "../../context/ContactProvider";
 import { Link } from "react-router-dom";
 import styles from "./Contacts.module.css";
+import axios from "axios";
 
 const Contacts = () => {
   const [activeRow, setActiveRow] = useState(null);
   const { contacts, setContacts } = useContext(ContactContext);
-
-  console.log(contacts);
   const detailsBtnHandler = (id) => {
     setActiveRow(id);
   };
+  const handleDelete = async(id) => {
+    await axios.delete(`http://localhost:8000/contacts/${id}`);
+    setContacts({
+      type: "DELETE_ITEM",
+      payload: id,
+    })
+  }
   return (
     <>
       <table dir="rtl" className={styles.table}>
@@ -37,12 +43,7 @@ const Contacts = () => {
                   <div className={styles.actions}>
                     <button
                     className={`${styles.btn} ${styles.deleteBtn}`}
-                      onClick={() =>
-                        setContacts({
-                          type: "DELETE_ITEM",
-                          payload: contact.id,
-                        })
-                      }
+                      onClick={() => handleDelete(contact.id)}
                     >
                       
                       حذف
