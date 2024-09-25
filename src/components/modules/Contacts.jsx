@@ -1,22 +1,15 @@
-import { useContext, useEffect, useState } from "react";
-import { ContactContext } from "../../context/ContactContext";
-import { Link, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { ContactContext } from "../../context/ContactProvider";
+import { Link } from "react-router-dom";
 import styles from "./Contacts.module.css";
 
 const Contacts = () => {
   const [activeRow, setActiveRow] = useState(null);
-  const [isEdited, setIsEdited] = useState(false);
   const { contacts, setContacts } = useContext(ContactContext);
-  const navigate = useNavigate();
 
   console.log(contacts);
-  // const editHandler = (contact) => {
-  //   setContacts({type:"EDIT_ITEM_Toggle",payload:contact});
-  //   setIsEdited(true);
-  //   navigate("/new-contact")
-  // }
   const detailsBtnHandler = (id) => {
-    setActiveRow(activeRow === id ? null : id);
+    setActiveRow(id);
   };
   return (
     <>

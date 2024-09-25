@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { ContactContext } from "../../context/ContactContext";
+import { ContactContext } from "../../context/ContactProvider";
 import { useNavigate, useParams } from "react-router-dom";
 
 const NewContact = () => {

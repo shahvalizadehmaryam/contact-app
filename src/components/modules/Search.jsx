@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { ContactContext } from "../../context/ContactContext";
+import { ContactContext } from "../../context/ContactProvider";
 
 
 const Search = () => {
