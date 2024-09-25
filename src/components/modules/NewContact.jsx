@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { ContactContext } from "../../context/ContactProvider";
 import { useNavigate, useParams } from "react-router-dom";
+import styles from "./NewContact.module.css";
 
 const NewContact = () => {
   const { contacts, setContacts } = useContext(ContactContext);
@@ -20,7 +21,9 @@ const NewContact = () => {
   // Populate the form if we are editing an existing contact
   useEffect(() => {
     if (contactId) {
-      const contactToEdit = contacts.data.find((contact) => contact.id === contactId);
+      const contactToEdit = contacts.data.find(
+        (contact) => contact.id === contactId
+      );
       if (contactToEdit) {
         setContact(contactToEdit);
       }
@@ -39,13 +42,13 @@ const NewContact = () => {
   // Handle form submission for both adding and editing
   const formSubmitHandler = (e) => {
     e.preventDefault();
-    console.log("i am a contact",contact)
+    console.log("i am a contact", contact);
     if (contactId) {
-      setContacts({type:"EDIT_CONTACT",payload:{contactId,contact}})
+      setContacts({ type: "EDIT_CONTACT", payload: { contactId, contact } });
     } else {
       // If adding a new contact, append it to the contacts list
-      setContacts({type:"ADD_CONTACT",payload:contact})
-      console.log("contacts in form",contacts)
+      setContacts({ type: "ADD_CONTACT", payload: contact });
+      console.log("contacts in form", contacts);
     }
 
     // After submission, navigate back to the contact list
@@ -53,7 +56,7 @@ const NewContact = () => {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <form onSubmit={formSubmitHandler}>
         <div>
           <label htmlFor="name">:نام و نام خانوادگی:</label>
@@ -94,9 +97,7 @@ const NewContact = () => {
             required
           />
         </div>
-        <button type="submit">
-          {contactId ? "ویرایش" : "افزودن"}
-        </button>
+        <button className={styles.btnEdit} type="submit">{contactId ? "ویرایش" : "افزودن"}</button>
       </form>
     </div>
   );
