@@ -3,6 +3,7 @@ import { ContactContext } from "../../context/ContactProvider";
 import { Link } from "react-router-dom";
 import styles from "./Contacts.module.css";
 import axios from "axios";
+import { deleteContact } from "../../services/ContactsApi";
 
 const Contacts = () => {
   const [activeRow, setActiveRow] = useState(null);
@@ -10,13 +11,13 @@ const Contacts = () => {
   const detailsBtnHandler = (id) => {
     setActiveRow(id);
   };
-  const handleDelete = async(id) => {
-    await axios.delete(`http://localhost:8000/contacts/${id}`);
+  const handleDelete = async (id) => {
+    await axios.delete(deleteContact(id));
     setContacts({
       type: "DELETE_ITEM",
       payload: id,
-    })
-  }
+    });
+  };
   return (
     <>
       <table dir="rtl" className={styles.table}>
@@ -42,14 +43,15 @@ const Contacts = () => {
                 {activeRow === contact.id ? (
                   <div className={styles.actions}>
                     <button
-                    className={`${styles.btn} ${styles.deleteBtn}`}
+                      className={`${styles.btn} ${styles.deleteBtn}`}
                       onClick={() => handleDelete(contact.id)}
                     >
-                      
                       حذف
                     </button>
                     <Link to={`/edit/${contact.id}`}>
-                    <button className={`${styles.btn} ${styles.editBtn}`}>ویرایش</button>
+                      <button className={`${styles.btn} ${styles.editBtn}`}>
+                        ویرایش
+                      </button>
                     </Link>
                   </div>
                 ) : (

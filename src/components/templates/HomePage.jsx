@@ -4,6 +4,7 @@ import Search from "../modules/Search";
 import { ContactContext } from "../../context/ContactProvider";
 import axios from "axios";
 import Loader from "../modules/Loader";
+import { getContactList } from "../../services/contactsApi";
 
 const HomePage = () => {
   const { contacts, setContacts } = useContext(ContactContext);
@@ -12,7 +13,7 @@ const HomePage = () => {
     const fetchContacts = async () => {
       try {
         setContacts({ type: "FETCH_START" });
-        const { data } = await axios.get("http://localhost:8000/contacts");
+        const { data } = await axios.get(getContactList());
         setContacts({ type: "FETCH_INITIAL_DATA", payload: data });
       } catch (error) {
         setContacts({ type: "FETCH_INITIAL_DATA", payload: [] });
