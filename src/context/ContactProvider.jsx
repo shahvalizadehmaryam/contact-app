@@ -19,6 +19,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         data: contacts,
+        isLoading: false
       };
     }
     case "FILTER_CONTACTS": {
