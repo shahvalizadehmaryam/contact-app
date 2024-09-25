@@ -48,12 +48,19 @@ const reducer = (state, action) => {
         data: updatedContacts,
       };
     }
+    case "EDIT_CONTACT": {
+      const contact = action.payload;
+      const updatedContacts = state.data.map((c) => (c.id === contact.id ? contact : c));
+      return {
+        ...state,
+        data: updatedContacts,
+      };
+    }
     case "ADD_CONTACT": {
       const contact = action.payload;
       return {
         ...state,
         data: [...state.data, contact],
-        // updatedData: [...state.updatedData, contact],
       };
     }
     default:
