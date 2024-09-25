@@ -3,16 +3,53 @@ export const ContactContext = createContext();
 const initialState = {
   isLoading: false,
   data: [
-    { id: 1, name: "سینا", email: "sina.gh@email.com",job:"software engineer",phone:"09147859621" },
-    { id: 2, name: "مریم", email: "maryam.gh@email.com",job:"ux designer",phone:"09147859627" },
-    { id: 3, name: "علی", email: "ali.gh@email.com",job:"graphic designer",phone:"09147858781" },
+    {
+      id: 1,
+      name: "سینا",
+      email: "sina.gh@email.com",
+      job: "software engineer",
+      phone: "09147859621",
+    },
+    {
+      id: 2,
+      name: "مریم",
+      email: "maryam.gh@email.com",
+      job: "ux designer",
+      phone: "09147859627",
+    },
+    {
+      id: 3,
+      name: "علی",
+      email: "ali.gh@email.com",
+      job: "graphic designer",
+      phone: "09147858781",
+    },
   ],
-  updatedData: [  // Initially copy all contacts into updatedData
-    { id: 1, name: "سینا", email: "sina.gh@email.com", job: "software engineer", phone: "09147859621" },
-    { id: 2, name: "مریم", email: "maryam.gh@email.com", job: "ux designer", phone: "09147859627" },
-    { id: 3, name: "علی", email: "ali.gh@email.com", job: "graphic designer", phone: "09147858781" },
+  updatedData: [
+    // Initially copy all contacts into updatedData
+    {
+      id: 1,
+      name: "سینا",
+      email: "sina.gh@email.com",
+      job: "software engineer",
+      phone: "09147859621",
+    },
+    {
+      id: 2,
+      name: "مریم",
+      email: "maryam.gh@email.com",
+      job: "ux designer",
+      phone: "09147859627",
+    },
+    {
+      id: 3,
+      name: "علی",
+      email: "ali.gh@email.com",
+      job: "graphic designer",
+      phone: "09147858781",
+    },
   ],
-  editedItem:{},
+  editedItem: {},
   isError: false,
 };
 const reducer = (state, action) => {
@@ -31,7 +68,7 @@ const reducer = (state, action) => {
       );
       return {
         ...state,
-       
+
         updatedData: updatedContacts,
       };
     }
@@ -45,36 +82,26 @@ const reducer = (state, action) => {
         updatedData: updatedContacts,
       };
     }
-    case "EDIT_ITEM":{
-        
-        const contact = action.payload;
-   
-        const updatedContacts = state.updatedData.map((item) =>
-            item.id === contact.id ?  {...item,...contact} : item
-          );
-          console.log("updatedContacts",updatedContacts)
-          console.log("state",state)
-        return {
-          ...state,
-         /*   editedItem: contact, */
-           updatedData: [...updatedContacts] 
-        };
-    }
-    case "EDIT_ITEM_Toggle":{
-      const contact = action.payload;
-      console.log("contact",contact)
+    case "EDIT_CONTACT": {
+     const contactId = action.payload.contactId; 
+     const contact = action.payload.contact; 
+      const updatedData = state.updatedData.map((c) => (
+        c.id === contactId ? {...contact} : c
+     ))
+     console.log("updateddata in reducer",updatedData)
       return {
         ...state,
-        editedItem: contact,
+        data: updatedData,
+        updatedData,
       };
     }
     case "ADD_CONTACT": {
-      const contact = action.payload.id;
-      return{
+      const contact = action.payload;
+      return {
         ...state,
-        data: [...state.updatedData , contact],
-        updatedData: [...state.updatedData , contact]
-      }
+        data: [...state.updatedData, contact],
+        updatedData: [...state.updatedData, contact],
+      };
     }
     default:
       return state;

@@ -20,7 +20,7 @@ const NewContact = () => {
   // Populate the form if we are editing an existing contact
   useEffect(() => {
     if (contactId) {
-      const contactToEdit = contacts.find((contact) => contact.id === contactId);
+      const contactToEdit = contacts.updatedData.find((contact) => contact.id === contactId);
       if (contactToEdit) {
         setContact(contactToEdit);
       }
@@ -39,20 +39,13 @@ const NewContact = () => {
   // Handle form submission for both adding and editing
   const formSubmitHandler = (e) => {
     e.preventDefault();
-
+    console.log("i am a contact",contact)
     if (contactId) {
-      // If editing an existing contact, update the contact
-      setContacts((prevContacts) =>
-        prevContacts.map((c) =>
-          c.id === contactId ? { ...contact } : c
-        )
-      );
+      setContacts({type:"EDIT_CONTACT",payload:{contactId,contact}})
     } else {
       // If adding a new contact, append it to the contacts list
-      setContacts((prevContacts) => [
-        ...prevContacts,
-        { ...contact, id: Date.now() },
-      ]);
+      setContacts({type:"ADD_CONTACT",payload:contact})
+      console.log("contacts in form",contacts)
     }
 
     // After submission, navigate back to the contact list
