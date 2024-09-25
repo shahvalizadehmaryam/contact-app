@@ -84,8 +84,8 @@ const formSubmitHandler = async(e) => {
 return (
   <div className={styles.container}>
     <form onSubmit={formSubmitHandler}>
-      <div>
-        <label htmlFor="name">:نام و نام خانوادگی:</label>
+      <div className={styles.formGroup}>
+        <label htmlFor="name">نام و نام خانوادگی:</label>
         <input
           type="text"
           onChange={inputChangeHandler}
@@ -94,8 +94,8 @@ return (
           required
         />
       </div>
-      <div>
-        <label>:ایمیل</label>
+      <div className={styles.formGroup}>
+        <label>ایمیل:</label>
         <input
           type="email"
           onChange={inputChangeHandler}
@@ -104,7 +104,7 @@ return (
           required
         />
       </div>
-      <div>
+      <div className={styles.formGroup}>
         <label>شغل:</label>
         <input
           type="text"
@@ -113,7 +113,7 @@ return (
           value={contact.job}
         />
       </div>
-      <div>
+      <div className={styles.formGroup}>
         <label>تلفن همراه:</label>
         <input
           type="text"
