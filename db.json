@@ -1,0 +1,26 @@
+{
+    "contacts": [
+      {
+        "id": 1,
+        "name": "سینا",
+        "email": "sina.gh@email.com",
+        "job": "software engineer",
+        "phone": "09147859621"
+      },
+      {
+        "id": 2,
+        "name": "مریم",
+        "email": "maryam.gh@email.com",
+        "job": "ux designer",
+        "phone": "09147859627"
+      },
+      {
+        "id": 3,
+        "name": "علی",
+        "email": "ali.gh@email.com",
+        "job": "graphic designer",
+        "phone": "09147858781"
+      }
+    ]
+  }
+  
