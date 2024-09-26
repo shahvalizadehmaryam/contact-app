@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ContactContext } from "../../context/ContactProvider";
 import { Link } from "react-router-dom";
 import styles from "./Contacts.module.css";
@@ -8,6 +8,7 @@ import { deleteContact } from "../../services/ContactsApi";
 const Contacts = () => {
   const [activeRow, setActiveRow] = useState(null);
   const { contacts, setContacts } = useContext(ContactContext);
+  const [selectedItems , setSelectedItems] = useState([]);
   const detailsBtnHandler = (id) => {
     setActiveRow(id);
   };
@@ -18,6 +19,20 @@ const Contacts = () => {
       payload: id,
     });
   };
+ const handleCheckBoxChange = (id) => {
+   if(contacts.selectedItems.includes(id)){
+    setContacts({type:"DELETE_SELECTITEM",payload:id})
+  /*   setSelectedItems(selectedItems.filter((c) => c.id !== id)); */
+   
+   }else{
+    setContacts({type:"ADD_SELECTITEM",payload:id})
+    // setSelectedItems([...selectedItems,id])
+    // setActiveRow(id)
+   }
+ }
+
+
+
   return (
     <>
       <table dir="rtl" className={styles.table}>
@@ -32,7 +47,7 @@ const Contacts = () => {
           </tr>
         </thead>
         <tbody>
-          {contacts.data?.map((contact) => (
+          {contacts.searchedData?.map((contact) => (
             <tr key={contact.id}>
               <td>{contact.id}</td>
               <td>{contact.name}</td>
@@ -40,7 +55,7 @@ const Contacts = () => {
               <td>{contact.job}</td>
               <td>{contact.phone}</td>
               <td>
-                {activeRow === contact.id ? (
+              {activeRow === contact.id ? (
                   <div className={styles.actions}>
                     <button
                       className={`${styles.btn} ${styles.deleteBtn}`}
@@ -59,6 +74,9 @@ const Contacts = () => {
                     ...
                   </button>
                 )}
+              </td>
+              <td>
+              <input type="checkbox" checked={contacts.selectedItems.includes(contact.id)}  onChange={()=>handleCheckBoxChange(contact.id)} />
               </td>
             </tr>
           ))}

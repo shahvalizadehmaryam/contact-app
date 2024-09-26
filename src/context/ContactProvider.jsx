@@ -3,7 +3,9 @@ export const ContactContext = createContext();
 const initialState = {
   isLoading: false,
   data: [],
+  searchedData: [],
   isError: false,
+  selectedItems:[]
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -18,24 +20,26 @@ const reducer = (state, action) => {
       return {
         ...state,
         data: contacts,
+        searchedData: contacts,
         isLoading: false,
       };
     }
     case "FILTER_CONTACTS": {
-      const text = action.payload;
-      if (!text)
+      const searchTerm = action.payload.toLowerCase();
+      if (!searchTerm) {
         return {
           ...state,
-          data: state.data,
+          searchedData: state.data,
         };
-      const updatedContacts = state.data.filter(
-        (item) =>
-          item.name.toLowerCase().includes(text.toLowerCase()) ||
-          item.email.toLowerCase().includes(text.toLowerCase())
+      }
+      const filteredData = state.data.filter(
+        (contact) =>
+          contact.name.toLowerCase().includes(searchTerm) ||
+          contact.email.toLowerCase().includes(searchTerm)
       );
       return {
         ...state,
-        data: updatedContacts,
+        searchedData: filteredData,
       };
     }
     case "DELETE_ITEM": {
@@ -46,14 +50,38 @@ const reducer = (state, action) => {
       return {
         ...state,
         data: updatedContacts,
+        searchedData: updatedContacts,
       };
+    }
+    case "DELETE_SELECTITEM":{
+      const contactId = action.payload;
+      const updatedContacts = state.selectedItems.filter(
+        (item) => item.id !== contactId
+      );
+      return {
+        ...state,
+        selectedItems : updatedContacts
+      };
+    }
+    case "ADD_SELECTITEM":{
+      const contactId = action.payload;
+      return {
+        ...state,
+        selectedItems : [...state.selectedItems , contactId]
+      };
+    }
+    case "DELETE_ALL":{
+      return state;
     }
     case "EDIT_CONTACT": {
       const contact = action.payload;
-      const updatedContacts = state.data.map((c) => (c.id === contact.id ? contact : c));
+      const updatedContacts = state.data.map((c) =>
+        c.id === contact.id ? contact : c
+      );
       return {
         ...state,
         data: updatedContacts,
+        searchedData: updatedContacts,
       };
     }
     case "ADD_CONTACT": {
@@ -61,6 +89,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         data: [...state.data, contact],
+        searchedData: [...state.data, contact],
       };
     }
     default:

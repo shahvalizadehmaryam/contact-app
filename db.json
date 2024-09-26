@@ -1,32 +1,11 @@
 {
   "contacts": [
     {
-      "id": 2,
-      "name": "iiii",
-      "email": "maryam.gh@email.com",
-      "job": "ux designer",
-      "phone": "09147859627"
-    },
-    {
-      "id": 5,
-      "name": "afra",
-      "email": "ali.gh@email.com",
-      "job": "graphic designer",
-      "phone": "09147858781"
-    },
-    {
-      "id": 8,
-      "name": "zara",
-      "email": "ali.gh@email.com",
-      "job": "graphic designer",
-      "phone": "09147858781"
-    },
-    {
-      "name": "ddd",
-      "email": "test@test.com",
+      "name": "t2",
+      "email": "shahvalizadehmaryam@gmail.com",
       "job": "ui designer",
       "phone": "09147367924",
-      "id": 9
+      "id": 16
     }
   ]
 }

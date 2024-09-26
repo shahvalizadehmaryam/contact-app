@@ -1,0 +1,17 @@
+.header{
+    direction: rtl;
+    display: flex;
+    justify-content: space-between;
+}
+.addIcon{
+    font-size: 35px;
+}
+.addIcon:hover{
+    fill: #7935dece;
+    cursor: pointer;
+}
+.iconsPart{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

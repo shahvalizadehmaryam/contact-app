@@ -4,29 +4,51 @@ import Search from "../modules/Search";
 import { ContactContext } from "../../context/ContactProvider";
 import axios from "axios";
 import Loader from "../modules/Loader";
-import { getContactList } from "../../services/contactsApi";
+import { IoIosAddCircleOutline } from "react-icons/io";
+import { deleteContact, getContactList } from "../../services/ContactsApi";
+import styles from "./HomePage.module.css";
+import { Link } from "react-router-dom";
+import { RiCheckDoubleLine } from "react-icons/ri";
 
 const HomePage = () => {
   const { contacts, setContacts } = useContext(ContactContext);
   const { isLoading } = contacts;
+  const fetchContacts = async () => {
+    try {
+      setContacts({ type: "FETCH_START" });
+      const { data } = await axios.get(getContactList());
+      setContacts({ type: "FETCH_INITIAL_DATA", payload: data });
+    } catch (error) {
+      setContacts({ type: "FETCH_INITIAL_DATA", payload: [] });
+      console.log(error.messages);
+    }
+  };
   useEffect(() => {
-    const fetchContacts = async () => {
-      try {
-        setContacts({ type: "FETCH_START" });
-        const { data } = await axios.get(getContactList());
-        setContacts({ type: "FETCH_INITIAL_DATA", payload: data });
-      } catch (error) {
-        setContacts({ type: "FETCH_INITIAL_DATA", payload: [] });
-        console.log(error.messages);
-      }
-    };
     fetchContacts();
   }, []);
-  console.log("contacts in home" , contacts)
+  const handleBtnGroupDelete = () => {
+      console.log("selecteditems",contacts.selectedItems)
+      axios.all(contacts.selectedItems.map((endpoint) => axios.delete(deleteContact(endpoint)))).then(
+        (data) => console.log(data)
+      );
+      fetchContacts();
+      // setContacts({type:"DELETE-ALL"})
+     
+  }
 
   return (
     <div>
-      <Search />
+      <div className={styles.header}>
+        <Search />
+        <div className={styles.iconsPart}>
+          <Link to="/new-contact">
+            <IoIosAddCircleOutline className={styles.addIcon} />
+          </Link>
+          <button onClick = {handleBtnGroupDelete}><RiCheckDoubleLine /></button>
+          
+        </div>
+      </div>
+
       {isLoading ? <Loader /> : <Contacts />}
     </div>
   );
