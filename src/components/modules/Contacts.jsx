@@ -8,7 +8,7 @@ import { deleteContact } from "../../services/ContactsApi";
 const Contacts = () => {
   const [activeRow, setActiveRow] = useState(null);
   const { contacts, setContacts } = useContext(ContactContext);
-  const [selectedItems , setSelectedItems] = useState([]);
+
   const detailsBtnHandler = (id) => {
     setActiveRow(id);
   };
@@ -19,19 +19,16 @@ const Contacts = () => {
       payload: id,
     });
   };
- const handleCheckBoxChange = (id) => {
-   if(contacts.selectedItems.includes(id)){
-    setContacts({type:"DELETE_SELECTITEM",payload:id})
-  /*   setSelectedItems(selectedItems.filter((c) => c.id !== id)); */
-   
-   }else{
-    setContacts({type:"ADD_SELECTITEM",payload:id})
-    // setSelectedItems([...selectedItems,id])
-    // setActiveRow(id)
-   }
- }
-
-
+  const handleCheckBoxChange = (id) => {
+    if (contacts.selectedItems.includes(id)) {
+      setContacts({ type: "DELETE_SELECTITEM", payload: id });
+      /*   setSelectedItems(selectedItems.filter((c) => c.id !== id)); */
+    } else {
+      setContacts({ type: "ADD_SELECTITEM", payload: id });
+      // setSelectedItems([...selectedItems,id])
+      // setActiveRow(id)
+    }
+  };
 
   return (
     <>
@@ -55,7 +52,20 @@ const Contacts = () => {
               <td>{contact.job}</td>
               <td>{contact.phone}</td>
               <td>
-              {activeRow === contact.id ? (
+                {contacts.isGroupDeleteSelected > 0 ? (
+                  <p>
+                    <input
+                      type="checkbox"
+                      checked={contacts.selectedItems.includes(contact.id)}
+                      onChange={() => handleCheckBoxChange(contact.id)}
+                    />
+                  </p>
+                ) : (
+                  <button onClick={() => detailsBtnHandler(contact.id)}>
+                  ...
+                </button>
+                )}
+                {activeRow === contact.id && (
                   <div className={styles.actions}>
                     <button
                       className={`${styles.btn} ${styles.deleteBtn}`}
@@ -69,14 +79,10 @@ const Contacts = () => {
                       </button>
                     </Link>
                   </div>
-                ) : (
-                  <button onClick={() => detailsBtnHandler(contact.id)}>
-                    ...
-                  </button>
                 )}
               </td>
               <td>
-              <input type="checkbox" checked={contacts.selectedItems.includes(contact.id)}  onChange={()=>handleCheckBoxChange(contact.id)} />
+                {/*  <input type="checkbox" checked={contacts.selectedItems.includes(contact.id)}  onChange={()=>handleCheckBoxChange(contact.id)} /> */}
               </td>
             </tr>
           ))}

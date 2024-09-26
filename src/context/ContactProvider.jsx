@@ -5,7 +5,8 @@ const initialState = {
   data: [],
   searchedData: [],
   isError: false,
-  selectedItems:[]
+  selectedItems: [],
+  isGroupDeleteSelected: false,
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -22,6 +23,7 @@ const reducer = (state, action) => {
         data: contacts,
         searchedData: contacts,
         isLoading: false,
+        isGroupDeleteSelected: false,
       };
     }
     case "FILTER_CONTACTS": {
@@ -53,24 +55,30 @@ const reducer = (state, action) => {
         searchedData: updatedContacts,
       };
     }
-    case "DELETE_SELECTITEM":{
+    case "DELETE_SELECTITEM": {
       const contactId = action.payload;
       const updatedContacts = state.selectedItems.filter(
         (item) => item.id !== contactId
       );
       return {
         ...state,
-        selectedItems : updatedContacts
+        selectedItems: updatedContacts,
       };
     }
-    case "ADD_SELECTITEM":{
+    case "DELETE_IN_GROUP_TOGGLED": {
+      return {
+        ...state,
+        isGroupDeleteSelected: true,
+      };
+    }
+    case "ADD_SELECTITEM": {
       const contactId = action.payload;
       return {
         ...state,
-        selectedItems : [...state.selectedItems , contactId]
+        selectedItems: [...state.selectedItems, contactId],
       };
     }
-    case "DELETE_ALL":{
+    case "DELETE_ALL": {
       return state;
     }
     case "EDIT_CONTACT": {

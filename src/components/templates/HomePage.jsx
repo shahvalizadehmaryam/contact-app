@@ -9,6 +9,7 @@ import { deleteContact, getContactList } from "../../services/ContactsApi";
 import styles from "./HomePage.module.css";
 import { Link } from "react-router-dom";
 import { RiCheckDoubleLine } from "react-icons/ri";
+import { AiOutlineUsergroupDelete } from "react-icons/ai";
 
 const HomePage = () => {
   const { contacts, setContacts } = useContext(ContactContext);
@@ -27,15 +28,18 @@ const HomePage = () => {
     fetchContacts();
   }, []);
   const handleBtnGroupDelete = () => {
-      console.log("selecteditems",contacts.selectedItems)
-      axios.all(contacts.selectedItems.map((endpoint) => axios.delete(deleteContact(endpoint)))).then(
-        (data) => console.log(data)
-      );
-      fetchContacts();
-      // setContacts({type:"DELETE-ALL"})
-     
-  }
-
+    console.log("selecteditems", contacts.selectedItems);
+    axios
+      .all(
+        contacts.selectedItems.map((endpoint) =>
+          axios.delete(deleteContact(endpoint))
+        )
+      )
+      .then((data) => console.log(data));
+    fetchContacts();
+    
+  };
+console.log("istoggle",contacts.isGroupDeleteSelected)
   return (
     <div>
       <div className={styles.header}>
@@ -44,8 +48,16 @@ const HomePage = () => {
           <Link to="/new-contact">
             <IoIosAddCircleOutline className={styles.addIcon} />
           </Link>
-          <button onClick = {handleBtnGroupDelete}><RiCheckDoubleLine /></button>
-          
+
+          {contacts.isGroupDeleteSelected ? (
+            <button onClick={handleBtnGroupDelete}><AiOutlineUsergroupDelete className={styles.deleteGroupIcon} /></button>
+          ) : (
+            <button
+              onClick={() => setContacts({ type: "DELETE_IN_GROUP_TOGGLED" })}
+            >
+              <RiCheckDoubleLine className={styles.checkIcon} />
+            </button>
+          )}
         </div>
       </div>
 

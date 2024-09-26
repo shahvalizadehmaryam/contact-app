@@ -6,6 +6,13 @@
 .addIcon{
     font-size: 35px;
 }
+.deleteGroupIcon,.checkIcon{
+    font-size: 25px;
+    border: 1px solid black;
+    border-radius: 50%;
+    
+}
+
 .addIcon:hover{
     fill: #7935dece;
     cursor: pointer;
