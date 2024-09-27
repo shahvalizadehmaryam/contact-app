@@ -55,7 +55,7 @@ console.log("istoggle",contacts.isGroupDeleteSelected)
       </div>
 
       {isLoading ? <Loader /> : <Contacts />}
-      {showModal && <Modal text="jhs" setShowModal={setShowModal} showModal={showModal} />}
+      {showModal && <Modal text="ایا مایل به حذف گروهی هستید؟" setShowModal={setShowModal} showModal={showModal} />}
       
     </div>
   );

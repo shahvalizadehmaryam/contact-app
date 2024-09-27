@@ -3,6 +3,7 @@ import { deleteContact, getContactList } from "../../services/ContactsApi";
 import styles from "./Modal.module.css";
 import { useContext } from "react";
 import { ContactContext } from "../../context/ContactProvider";
+import toast from "react-hot-toast";
 
 const Modal = ({ showModal, setShowModal, text, activeRow }) => {
   const { contacts, setContacts } = useContext(ContactContext);
@@ -18,14 +19,16 @@ const Modal = ({ showModal, setShowModal, text, activeRow }) => {
       // Update state after successful deletion of multiple items
       setContacts({
         type: "DELETE_SELECTED_ITEMS",
-        payload: {data,selectedItems:contacts.selectedItems},
+        payload: { data, selectedItems: contacts.selectedItems },
       });
+      if (data) toast.error(`${contacts.selectedItems.length} ایتم حذف شدند.`);
     } else {
       await axios.delete(deleteContact(id));
       setContacts({
         type: "DELETE_ITEM",
         payload: id,
       });
+      toast.error("با موفقیت حذف شد")
     }
     setShowModal(false);
   };
