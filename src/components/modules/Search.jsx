@@ -8,7 +8,6 @@ const Search = () => {
   console.log("c in search",contacts);
   const [text, setText] = useState("");
   useEffect(() => {
-    /* if(!text) return; */
    setContacts({type:"FILTER_CONTACTS",payload:text});
   }, [text]);
   return (

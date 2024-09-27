@@ -2,18 +2,21 @@
     direction: rtl;
     display: flex;
     justify-content: space-between;
+    border: 1px solid #bfbdbd;
+    border-radius: 20px;
+    padding: 15px 20px;
 }
 .addIcon{
     font-size: 35px;
 }
 .deleteGroupIcon,.checkIcon{
     font-size: 25px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     border-radius: 50%;
     
 }
 
-.addIcon:hover{
+.addIcon:hover , .deleteGroupIcon:hover ,.checkIcon:hover{
     fill: #7935dece;
     cursor: pointer;
 }

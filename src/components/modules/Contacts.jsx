@@ -4,34 +4,32 @@ import { Link } from "react-router-dom";
 import styles from "./Contacts.module.css";
 import axios from "axios";
 import { deleteContact } from "../../services/ContactsApi";
+import Modal from "./Modal";
 
 const Contacts = () => {
   const [activeRow, setActiveRow] = useState(null);
   const { contacts, setContacts } = useContext(ContactContext);
+  const [showModal , setShowModal] = useState(false);
 
+  const text = "شما در حال حذف یکی از مخاطبینتان هستید ایا مطمعن هستید؟";
   const detailsBtnHandler = (id) => {
     setActiveRow(id);
   };
-  const handleDelete = async (id) => {
-    await axios.delete(deleteContact(id));
-    setContacts({
-      type: "DELETE_ITEM",
-      payload: id,
-    });
+  const handleDelete =() => {
+    
+    setShowModal(true);
   };
   const handleCheckBoxChange = (id) => {
     if (contacts.selectedItems.includes(id)) {
       setContacts({ type: "DELETE_SELECTITEM", payload: id });
-      /*   setSelectedItems(selectedItems.filter((c) => c.id !== id)); */
     } else {
       setContacts({ type: "ADD_SELECTITEM", payload: id });
-      // setSelectedItems([...selectedItems,id])
-      // setActiveRow(id)
     }
   };
 
   return (
     <>
+    {showModal ? <Modal activeRow={activeRow} text={text} setShowModal={setShowModal} showModal={showModal} /> : (    <div className={styles.container}>
       <table dir="rtl" className={styles.table}>
         <thead>
           <tr>
@@ -82,13 +80,15 @@ const Contacts = () => {
                 )}
               </td>
               <td>
-                {/*  <input type="checkbox" checked={contacts.selectedItems.includes(contact.id)}  onChange={()=>handleCheckBoxChange(contact.id)} /> */}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      
+    </div>)}
     </>
+
   );
 };
 

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import Contacts from "../modules/Contacts";
 import Search from "../modules/Search";
 import { ContactContext } from "../../context/ContactProvider";
@@ -10,10 +10,12 @@ import styles from "./HomePage.module.css";
 import { Link } from "react-router-dom";
 import { RiCheckDoubleLine } from "react-icons/ri";
 import { AiOutlineUsergroupDelete } from "react-icons/ai";
+import Modal from "../modules/Modal";
 
 const HomePage = () => {
   const { contacts, setContacts } = useContext(ContactContext);
   const { isLoading } = contacts;
+  const [showModal , setShowModal] = useState(false);
   const fetchContacts = async () => {
     try {
       setContacts({ type: "FETCH_START" });
@@ -28,16 +30,7 @@ const HomePage = () => {
     fetchContacts();
   }, []);
   const handleBtnGroupDelete = () => {
-    console.log("selecteditems", contacts.selectedItems);
-    axios
-      .all(
-        contacts.selectedItems.map((endpoint) =>
-          axios.delete(deleteContact(endpoint))
-        )
-      )
-      .then((data) => console.log(data));
-    fetchContacts();
-    
+    setShowModal(true);
   };
 console.log("istoggle",contacts.isGroupDeleteSelected)
   return (
@@ -62,6 +55,8 @@ console.log("istoggle",contacts.isGroupDeleteSelected)
       </div>
 
       {isLoading ? <Loader /> : <Contacts />}
+      {showModal && <Modal text="jhs" setShowModal={setShowModal} showModal={showModal} />}
+      
     </div>
   );
 };

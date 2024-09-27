@@ -63,6 +63,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         selectedItems: updatedContacts,
+        
       };
     }
     case "DELETE_IN_GROUP_TOGGLED": {
@@ -78,8 +79,21 @@ const reducer = (state, action) => {
         selectedItems: [...state.selectedItems, contactId],
       };
     }
-    case "DELETE_ALL": {
-      return state;
+    case "DELETE_SELECTED_ITEMS": {
+      console.log("payload",action.payload);
+
+      return {
+        ...state,
+        selectedItems : action.payload.selectedItems,
+        data: action.payload.data,
+        searchedData: action.payload.data,
+      };
+    }
+    case "RESET": {
+      return {
+        ...state,
+        selectedItems: [],
+      };
     }
     case "EDIT_CONTACT": {
       const contact = action.payload;
